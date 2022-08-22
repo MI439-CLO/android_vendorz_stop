@@ -45,7 +45,8 @@ PRODUCT_COPY_FILES += \
 
 # Charger
 PRODUCT_PACKAGES += \
-    aospa_charger
+    aospa_charger \
+    aospa_charger_vendor
 
 PRODUCT_SYSTEM_EXT_PROPERTIES += \
     ro.charger.enable_suspend=1
