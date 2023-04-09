@@ -25,6 +25,10 @@ PRODUCT_COPY_FILES += \
     vendor/aospa/target/config/sensitive_pn.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sensitive_pn.xml
 
 # Audio
+ifeq ($(TARGET_DISABLES_GMS), true)
+$(call inherit-product, frameworks/base/data/sounds/AllAudio.mk)
+endif
+
 # Increase volume level steps
 PRODUCT_SYSTEM_PROPERTIES += \
     ro.config.media_vol_steps=30
@@ -34,7 +38,7 @@ $(call inherit-product, vendor/aospa/bootanimation/bootanimation.mk)
 
 # Camera
 PRODUCT_PACKAGES += \
-    GoogleCameraGo
+    GrapheneOSCamera
 
 PRODUCT_COPY_FILES += \
     vendor/aospa/target/config/permissions/lily_experience.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/sysconfig/lily_experience.xml
@@ -47,13 +51,24 @@ PRODUCT_SYSTEM_EXT_PROPERTIES += \
 PRODUCT_PACKAGES += \
     curl
 
+# Custom Apps
+ifeq ($(TARGET_DISABLES_GMS), true)
+PRODUCT_PACKAGES += \
+    DuckDuckGo \
+    ExactCalculator \
+    SimpleCalendar \
+    SimpleGallery
+endif
+
 # Dex2oat
 PRODUCT_SYSTEM_EXT_PROPERTIES += \
     dalvik.vm.dex2oat64.enabled=true
 
 # Dexpreopt
 # Don't dexpreopt prebuilts. (For GMS).
+ifneq ($(TARGET_DISABLES_GMS), true)
 DONT_DEXPREOPT_PREBUILTS := true
+endif
 
 PRODUCT_DEXPREOPT_SPEED_APPS += \
     ParanoidSystemUI
@@ -82,12 +97,14 @@ PRODUCT_PACKAGES += \
     vendor.aospa.power-service
 
 # Google - GMS, Pixel, and Mainline Modules
+ifneq ($(TARGET_DISABLES_GMS), true)
 $(call inherit-product, vendor/google/gms/config.mk)
 $(call inherit-product, vendor/google/pixel/config.mk)
 ifneq ($(TARGET_FLATTEN_APEX), true)
 $(call inherit-product-if-exists, vendor/google/modules/build/mainline_modules.mk)
 else
 $(call inherit-product-if-exists, vendor/google/modules/build/mainline_modules_flatten_apex.mk)
+endif
 endif
 
 # HIDL
