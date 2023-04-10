@@ -44,9 +44,11 @@ PRODUCT_COPY_FILES += \
     vendor/aospa/target/config/permissions/lily_experience.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/sysconfig/lily_experience.xml
 
 # Charger
+ifeq ($(TARGET_DISABLES_GMS), true)
 PRODUCT_PACKAGES += \
     aospa_charger \
     aospa_charger_vendor
+endif
 
 PRODUCT_SYSTEM_EXT_PROPERTIES += \
     ro.charger.enable_suspend=1
