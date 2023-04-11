@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2021 Paranoid Android
+<!-- Copyright (C) 2023 Paranoid Android
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -162,5 +162,9 @@
              2 - MODE_NIGHT_YES
     -->
     <integer name="config_defaultNightMode">2</integer>
+
+    <!-- Flag indicating whether notification and ringtone volumes
+         are controlled together (aliasing is true) or not. -->
+    <bool name="config_alias_ring_notif_stream_types">false</bool>
 
 </resources>
